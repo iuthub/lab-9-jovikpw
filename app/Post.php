@@ -1,43 +1,36 @@
 <?php
 
 namespace App;
-
-class Post
+use Illuminate\Database\Eloquent\Model;
+class Post extends Model
 {
-    public function getPosts($session)
+    
+    public function getPosts()
     {
-        if (!$session->has('posts')) {
-            $this->createDummyData($session);
-        }
-        return $session->get('posts');
+        return $this->session->get('posts');
     }
 
-    public function getPost($session, $id)
+    public function getPost($id)
     {
-        if (!$session->has('posts')) {
-            $this->createDummyData();
-        }
-        return $session->get('posts')[$id];
+       
+        return $this->session->get('posts')[$id];
     }
 
-    public function addPost($session, $title, $content)
+    public function addPost($title, $content)
     {
-        if (!$session->has('posts')) {
-            $this->createDummyData();
-        }
-        $posts = $session->get('posts');
+        $posts = $this->session->get('posts');
         array_push($posts, ['title' => $title, 'content' => $content]);
-        $session->put('posts', $posts);
+        $this->session->put('posts', $posts);
     }
 
-    public function editPost($session, $id, $title, $content)
+    public function editPost($id, $title, $content)
     {
-        $posts = $session->get('posts');
+        $posts = $this->session->get('posts');
         $posts[$id] = ['title' => $title, 'content' => $content];
-        $session->put('posts', $posts);
+        $this->session->put('posts', $posts);
     }
 
-    private function createDummyData($session)
+    private function createDummyData()
     {
         $posts = [
             [
@@ -49,6 +42,7 @@ class Post
                 'content' => 'Some other content'
             ]
         ];
-        $session->put('posts', $posts);
+        $this->session->put('posts', $posts);
     }
+
 }
