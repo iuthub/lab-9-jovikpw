@@ -10,7 +10,10 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
+Route::get('delete/{id}',[
+     'uses' => 'PostController@getAdminDelete',
+     'as' => 'admin.delete'
+      ]);
 Route::get('/', [
     'uses' => 'PostController@getIndex',
     'as' => 'blog.index'
